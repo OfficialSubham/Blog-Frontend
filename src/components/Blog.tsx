@@ -21,7 +21,6 @@ const Blog = ({ id, description, tag, title, user }: IBlog) => {
           Authorization: localStorage.getItem("token")
         }
       })
-      console.log(deleted)
       dispatch(removeBlog(id))
       dispatch(setLoading(false))
       if(deleted.status === 200) {
