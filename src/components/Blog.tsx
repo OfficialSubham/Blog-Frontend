@@ -8,8 +8,8 @@ import { AppDispatch } from "@/redux/store";
 
 const Blog = ({ id, description, tag, title, user }: IBlog) => {
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
-  const handleBlog = (e: React.MouseEvent<HTMLDivElement>) => {
-    // console.log(e.currentTarget.id)
+  const handleBlog = () => {
+
   };
   const dispatch = useDispatch<AppDispatch>()
   const handleDeleteBlog = async (e: React.MouseEvent<HTMLButtonElement>) => {
