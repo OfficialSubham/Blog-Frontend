@@ -16,7 +16,7 @@ const UserIcon = () => {
           userData.user?.firstName[0].toLocaleUpperCase()
         }
       </div>
-      <UserInfo visible={showInfo}/>
+      <UserInfo visible={showInfo} setVisibility={setShowInfo}/>
     </>
   );
 };
