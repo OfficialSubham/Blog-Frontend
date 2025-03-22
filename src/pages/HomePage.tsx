@@ -2,6 +2,7 @@ import Blog from "@/components/Blog";
 import { IAllBlog, setAllBlogs } from "@/redux/Blog/blogSlice";
 import { setLoading } from "@/redux/loading";
 import { AppDispatch, RootState } from "@/redux/store";
+import { getUserDetailsAsync } from "@/redux/User/userSlice";
 import axios from "axios";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -13,9 +14,9 @@ const HomePage = () => {
   const allBlog = useSelector((state: RootState) => state.blog.blogs);
 
 
-
   const getAllBlogs = async () => {
     dispatch(setLoading(true));
+    dispatch(getUserDetailsAsync())
     const token = localStorage.getItem("token");
     const res: IAllBlog = await axios.get(`${BACKEND_URL}/blog/getallblogs`, {
       headers: {
