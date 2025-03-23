@@ -56,7 +56,6 @@ const YourProfile = () => {
         return alert("Enter Valid Passowrd");
     }
     }
-    console.log(filteredData)
     dispatch(setLoading(true))
     const res:IRes = await axios.put(
       `${BACKEND_URL}/user/updateuser`,
@@ -67,7 +66,6 @@ const YourProfile = () => {
         },
       }
     );
-    console.log(res)
     if(res.status === 200 && res.data.token) {
         localStorage.setItem("token", res.data.token)
     }
