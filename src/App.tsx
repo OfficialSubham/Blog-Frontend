@@ -15,6 +15,7 @@ import { AppDispatch, RootState } from "./redux/store";
 import Loading from "./components/Loading";
 import YourBlogs from "./pages/YourBlogs";
 import { getUserDetailsAsync } from "./redux/User/userSlice";
+import YourProfile from "./pages/YourProfile";
 
 function App() {
   const loggedIn = useSelector((state: RootState) => state.loggedIn.loggedIn);
@@ -43,6 +44,7 @@ function App() {
                 <Route path="/" Component={HomePage} />
                 <Route path="/yourblogs" Component={YourBlogs} />
                 <Route path="/createblog" Component={CreateBlog} />
+                <Route path="/yourprofile" Component={YourProfile} />
               </Route>
               <Route path="*" Component={LoginPage} />
             </Routes>

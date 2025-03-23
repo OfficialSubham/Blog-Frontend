@@ -16,7 +16,7 @@ const Navbar = () => {
   const [query, setQuery] = useState("");
 
   const location = useLocation();
-  const hiddenRoute = "/yourblogs";
+  const hiddenRoute = ["/yourblogs", "/yourprofile"];
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
   };
@@ -57,7 +57,11 @@ const Navbar = () => {
       <div className="w-screen z-50 bg-slate-500 top-0 h-15 flex items-center justify-center px-5 fixed md:px-40 py-2">
         <div className="w-full bg-black text-white flex h-full rounded-2xl items-center backdrop-blur-3xl justify-between px-4">
           <div>
-            {location.pathname !== hiddenRoute ? (
+            {hiddenRoute.includes(location.pathname) ? (
+                <button className="cursor-pointer" onClick={() => {
+                  navigate("/")
+                }}> &#x219e; Back</button>
+            ) : (
               <div className="flex gap-2">
                 <input
                   type="text"
@@ -70,10 +74,6 @@ const Navbar = () => {
                   <img src="./icons/search-icon.svg" alt="" />
                 </button>
               </div>
-            ) : (
-              <button className="cursor-pointer" onClick={() => {
-                navigate("/")
-              }}> &#x219e; Back</button>
             )}
           </div>
 

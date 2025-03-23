@@ -57,7 +57,10 @@ const CreateBlog = () => {
 
     setNewBlog(updatedBlog);
     const { success } = blogSchema.safeParse(newBlog);
-    if (!success) return alert("Follow minimum criteria");
+    if (!success) {
+      dispatch(setLoading(false));
+      return alert("Follow minimum criteria");
+    }
 
     const res: IRes = await axios.post(
       `${BACKEND_URL}/blog/createblog`,

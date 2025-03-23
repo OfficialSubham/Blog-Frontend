@@ -4,9 +4,9 @@ import { Link, useLocation } from "react-router-dom";
 
 const AddBlog = () => {
   const location = useLocation();
-  const hiddenRoute = "/createblog";
+  const hiddenRoute = ["/createblog", "/yourprofile", "/yourblogs"];
   const loggedIn = useSelector((state: RootState) => state.loggedIn.loggedIn);
-  if (location.pathname == hiddenRoute) {
+  if (hiddenRoute.includes(location.pathname)) {
     return null;
   }
   return (
