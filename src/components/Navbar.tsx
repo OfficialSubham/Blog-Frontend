@@ -10,20 +10,20 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const loggedIn = useSelector((state: RootState) => state.loggedIn.loggedIn);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
   const dispatch = useDispatch();
   const [query, setQuery] = useState("");
 
   const location = useLocation();
-  const hiddenRoute = ["/yourblogs", "/yourprofile"];
+  const hiddenRoute = ["/yourblogs", "/yourprofile", "/edityourblog"];
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
   };
 
   const handleSearch = async () => {
     dispatch(setLoading(true));
- 
+
     try {
       const res: IAllBlog = await axios.get(
         `${BACKEND_URL}/blog/searchblogs?search=${query}`,
@@ -47,7 +47,7 @@ const Navbar = () => {
         dispatch(setLoading(false));
         // console.log(error)
         alert("No Blog Found");
-        return navigate("/")
+        return navigate("/");
       }
     }
   };
@@ -58,9 +58,15 @@ const Navbar = () => {
         <div className="w-full bg-black text-white flex h-full rounded-2xl items-center backdrop-blur-3xl justify-between px-4">
           <div>
             {hiddenRoute.includes(location.pathname) ? (
-                <button className="cursor-pointer" onClick={() => {
-                  navigate("/")
-                }}> &#x219e; Back</button>
+              <button
+                className="cursor-pointer"
+                onClick={() => {
+                  navigate("/");
+                }}
+              >
+                {" "}
+                &#x219e; Back
+              </button>
             ) : (
               <div className="flex gap-2">
                 <input

@@ -1,34 +1,48 @@
 import { IBlog, removeBlog } from "@/redux/Blog/blogSlice";
 import Tag from "./Tag";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setLoading } from "@/redux/loading";
-import { AppDispatch } from "@/redux/store";
+import { AppDispatch, RootState } from "@/redux/store";
+import { useSelector } from "react-redux";
+import { setEditBlogState } from "@/redux/Blog/editBlogSlice";
 
 const Blog = ({ id, description, tag, title, user }: IBlog) => {
-  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
-  const handleBlog = () => {
-
-  };
-  const dispatch = useDispatch<AppDispatch>()
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
   const handleDeleteBlog = async (e: React.MouseEvent<HTMLButtonElement>) => {
     const id = Number(e.currentTarget.closest(".blog-container")?.id);
-    dispatch(setLoading(true))
+    dispatch(setLoading(true));
     try {
-      const deleted = await axios.delete(`${BACKEND_URL}/blog/deleteblog/${id}`, {
-        headers: {
-          Authorization: localStorage.getItem("token")
+      const deleted = await axios.delete(
+        `${BACKEND_URL}/blog/deleteblog/${id}`,
+        {
+          headers: {
+            Authorization: localStorage.getItem("token"),
+          },
         }
-      })
-      dispatch(removeBlog(id))
-      dispatch(setLoading(false))
-      if(deleted.status === 200) {
-        return alert("Successfully deleted")
+      );
+      dispatch(removeBlog(id));
+      dispatch(setLoading(false));
+      if (deleted.status === 200) {
+        return alert("Successfully deleted");
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
+  };
+
+  const blog = useSelector((state: RootState) => state.blog.blogs);
+
+  const handleEditBlog = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const id = Number(e.currentTarget.closest(".blog-container")?.id);
+    const editedBlog = blog.find((eachBlog) => eachBlog.id === id);
+    if(editedBlog) {
+      dispatch(setEditBlogState(editedBlog));
+    }
+    return navigate("/edityourblog");
   };
 
   const location = useLocation();
@@ -38,7 +52,6 @@ const Blog = ({ id, description, tag, title, user }: IBlog) => {
     <>
       <div
         className="w-full blog-container flex gap-5 cursor-pointer flex-col xl:grid md:grid-cols-12 px-5"
-        onClick={handleBlog}
         id={`${id}`}
       >
         <div className="flex flex-col col-span-8">
@@ -62,12 +75,17 @@ const Blog = ({ id, description, tag, title, user }: IBlog) => {
             <div className="w-full flex justify-between break-words">
               {user.firstName + " " + user.lastName}
               {location.pathname === visibleRoute && (
-                <button
-                  className="bg-red-500 text-white px-1 rounded-sm"
-                  onClick={handleDeleteBlog}
-                >
-                  Delete
-                </button>
+                <div className="flex gap-4">
+                  <button className="cursor-pointer" onClick={handleEditBlog}>
+                    <img src="./icons/edit.svg" alt="" />
+                  </button>
+                  <button
+                    className="bg-red-500 text-white px-1 rounded-sm"
+                    onClick={handleDeleteBlog}
+                  >
+                    Delete
+                  </button>
+                </div>
               )}
             </div>
           </div>
