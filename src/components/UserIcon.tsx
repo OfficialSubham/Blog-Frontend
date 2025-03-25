@@ -13,7 +13,7 @@ const UserIcon = () => {
     <>
       <div className="flex h-10 items-center justify-center w-10 text-center bg-gray-500 rounded-full border border-white cursor-pointer" onClick={handleProfileIcon}>
         {
-          userData.user?.firstName[0].toLocaleUpperCase()
+          userData.user?.firstName[0].toLocaleUpperCase() || "X"
         }
       </div>
       <UserInfo visible={showInfo} setVisibility={setShowInfo}/>
