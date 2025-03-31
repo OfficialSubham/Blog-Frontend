@@ -44,6 +44,9 @@ const LoginPage = () => {
       });
       if (res.status === 200) {
         dispatch(setLoggedIn(true));
+        if (!res.data.token) {
+          return alert("Username doesnot exists");
+        }
         const token = res.data.token;
         localStorage.setItem("token", token);
         dispatch(setLoading(false));
